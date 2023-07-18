@@ -1,14 +1,8 @@
 package com.springteste.springapiteste.config;
 
-import com.springteste.springapiteste.entities.Category;
-import com.springteste.springapiteste.entities.Order;
-import com.springteste.springapiteste.entities.Product;
-import com.springteste.springapiteste.entities.User;
+import com.springteste.springapiteste.entities.*;
 import com.springteste.springapiteste.entities.enums.OrderStatus;
-import com.springteste.springapiteste.repositories.CategoryRepository;
-import com.springteste.springapiteste.repositories.OrderRepository;
-import com.springteste.springapiteste.repositories.ProductRepository;
-import com.springteste.springapiteste.repositories.UserRepository;
+import com.springteste.springapiteste.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
@@ -29,6 +23,8 @@ public class TestConfig implements CommandLineRunner {
     private CategoryRepository categoryRepository;
     @Autowired
     private ProductRepository productRepository;
+    @Autowired
+    private OrderItemRepository orderItemRepository;
     @Override
     public void run(String... args) throws Exception {
 
@@ -62,7 +58,16 @@ public class TestConfig implements CommandLineRunner {
 
         userRepository.saveAll(Arrays.asList(u1,u2));
         orderRepository.saveAll(Arrays.asList(o1,o2,o3));
+
         categoryRepository.saveAll(Arrays.asList(cat1,cat2,cat3));
         productRepository.saveAll(Arrays.asList(p1,p2,p3,p4,p5));
+
+        OrderItem oi1 = new OrderItem(o1, p1, 2, p1.getPrice());
+        OrderItem oi2 = new OrderItem(o1, p3, 1, p3.getPrice());
+        OrderItem oi3 = new OrderItem(o2, p3, 2, p3.getPrice());
+        OrderItem oi4 = new OrderItem(o3, p5, 2, p5.getPrice());
+
+        orderItemRepository.saveAll(Arrays.asList(oi1,oi2,oi3,oi4));
+
     }
 }
